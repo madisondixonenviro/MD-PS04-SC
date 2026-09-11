@@ -1,6 +1,6 @@
 ---
 title: "Problem Set 04: Linear Regression"
-author: "Your Name"
+author: "Madison Dixon"
 date: last-modified
 date-format: "[Last modified on] MMMM DD, YYYY HH:mm:ss zzz"
 format: 
@@ -98,7 +98,7 @@ Does the relationship in @fig-TSG appear to be positive or negative? Does the re
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 1 Answers"}
--   Delete this and put your text answer here.
+-   The relationship in figure 1 looks positive and reasonably linear.
 :::
 
 ## The Correlation Coefficient (r)
@@ -181,7 +181,7 @@ We found a positive correlation coefficient between `trump_support` and `poverty
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 2 Answers"}
--   Delete this and put your text answer here.
+-   It is not reasonable to conclude an actual causation relationship between the variables poverty and trump_support, correlation between data variables does not equal causation.
 :::
 
 ## Making Predictions
@@ -212,10 +212,11 @@ What percent of Trump support would you expect at a value of 6% white poverty?
 ::: {.callout-important icon="false" collapse="false" title="Problem 3 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+y_hat = 30.8064 + 2.0591 * 6
+y_hat
 ```
 
--   Delete this and put your text answer here.
+-   **`r y_hat`** is the percentage of Trump support expected at 6% white poverty.
 :::
 
 ::: {.callout-note icon="false" title="Problem 4"}
@@ -223,7 +224,7 @@ Do you think it is a good idea to predict Trump support at 85% white poverty, ba
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 4 Answers"}
--   Delete this and put your text answer here.
+-   I don't think predicting at a value of 85% white poverty would be a good idea as the regression line fitted only covers up to ~20% white poverty, predicting out of the range would not be a good idea as the data would be unreliable.
 :::
 
 ## Residuals
@@ -270,6 +271,8 @@ Generate a scatterplot with a best-fitting line with `non_white` as the explanat
 ::: {.callout-important icon="false" collapse="false" title="Problem 5 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
+ggplot(trump, aes(x=non_white, y=trump_support))+
+  geom_point()
 ```
 :::
 
@@ -278,11 +281,11 @@ Do you expect the correlation coefficient (for `non_white` and `trump_support`) 
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 6 Answers"}
--   Delete this and put your text answer here.
+-   I expect the correlation coefficient to be negative.
 
 ```{r}
 # Type your code and comments inside the code chunk
-
+summarize(trump, cor(non_white, trump_support))
 ```
 :::
 
@@ -293,12 +296,15 @@ Run a linear regression using `non_white` as the **explanatory** variable, and `
 ::: {.callout-important icon="false" collapse="false" title="Problem 7 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
+nw_mod <-lm(trump_support ~ non_white, data=trump)
+newt <- get_regression_table(nw_mod)
+
 
 ```
 
--   Delete this and put your text answer here.
+-   The y-intercept is `r newt[2,2]`.
 
--   Delete this and put your text answer here.
+-   The slope is `r newt[1,2]`.
 :::
 
 ::: {.callout-note icon="false" title="Problem 8"}
@@ -308,10 +314,10 @@ Make a numerical prediction for the level of trump support for a region that has
 ::: {.callout-important icon="false" collapse="false" title="Problem 8 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+pred = newt[1,2]*.70+newt[2,2]
 ```
 
--   Delete this and put your text answer here.
+-   The predicted Trump support for a region with a population of 70% non-white people is `r pred`%.
 :::
 
 ::: {.callout-note icon="false" title="Problem 9"}
@@ -324,7 +330,7 @@ Based on the evidence you have so far (scatterplots and correlation coefficients
 
 ```
 
--   Delete this and put your text answer here.
+-   The variable non_white covers a larger range of percentages and is the better explanatory variable.
 :::
 
 ::: {.callout-note icon="false" title="Problem 10"}
@@ -340,19 +346,19 @@ If Representative Ocasio-Cortez saw the regression line (`nw_mod`) and not the a
 ::: {.callout-important icon="false" collapse="false" title="Problem 10 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+pred2 = newt[1,2]*.61+newt[2,2]
 ```
 
-**A.** Delete this and put your text answer here.
+**A.** The predicted Trump support for a region with a population of 61% non-white people is `r pred2`%.
 
 ```{r}
 # Type your code and comments inside the code chunk
-
+act<- trump[2,3-4]
 ```
 
-**B.** Delete this and put your text answer here.
+**B.** An overestimate by 2% as `r act[1,3]` is an actual support value for an area of 61% non-white people from the data set.
 
-**C.** Delete this and put your text answer here.
+**C.** The residual is 2%.
 :::
 
 # Turning in Your Work
