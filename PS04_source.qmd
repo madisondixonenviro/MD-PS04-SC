@@ -330,7 +330,7 @@ Based on the evidence you have so far (scatterplots and correlation coefficients
 
 ```
 
--   The variable non_white covers a larger range of percentages and is the better explanatory variable.
+-   The variable non_white covers a larger range of percentages but the poverty variable has a higher correlation coefficient (when using absolute value), so poverty is the better explanatory variable.
 :::
 
 ::: {.callout-note icon="false" title="Problem 10"}
@@ -358,7 +358,7 @@ act<- trump[2,3-4]
 
 **B.** An overestimate by 2% as `r act[1,3]` is an actual support value for an area of 61% non-white people from the data set.
 
-**C.** The residual is 2%.
+**C.** The residual is -2%.
 :::
 
 # Turning in Your Work
